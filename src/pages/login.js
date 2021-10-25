@@ -15,19 +15,12 @@ function Login() {
   const auth = getAuth();
 
   const correoClave = () => {
-    console.log(true);
-    console.log("userLogin", userLogin);
-    console.log("userLogin email", userLogin.email);
-    console.log("userLogin password", userLogin.password);
     setLoading(true);
-    // signInWithEmailAndPassword(auth, "zlkamaly@gmail.com", "123456789")
     signInWithEmailAndPassword(auth, userLogin.email, userLogin.password)
       .then((userCredential) => {
         console.info(true);
         const user = userCredential.user;
-        console.log("=>>>>>>>>>>>>> user", user);
         setLoading(false);
-        // window.location.reload();
       })
       .catch((error) => {
         setLoading(false);
@@ -101,15 +94,12 @@ function Login() {
 
           <br></br>
           <br></br>
-          <input type="submit" value="Submit" />
-          {/* <button
-            type="button"
+          <input
+            type="submit"
+            value="Aceptar"
             class="btn btn-primary mb-3"
-            onClick={correoClave}
             disabled={disabled}
-          >
-            Aceptar
-          </button> */}
+          />
           {error ? <Alert message={message} /> : <div />}
         </div>
       </form>
