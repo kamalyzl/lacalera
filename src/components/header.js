@@ -1,36 +1,17 @@
 import "../App.css";
 
-function Header() {
+function Header({ logout }) {
   return (
-    <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="Calera">
-            Calera
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand">Pedidos</a>
+        <form class="d-flex">
+          <button class="btn btn-outline-success" type="button" onClick={logout}>
+            Salir
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="Pedidos">
-                  Pedidos
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
+        </form>
+      </div>
+    </nav>
   );
 }
 

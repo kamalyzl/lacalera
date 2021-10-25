@@ -1,50 +1,76 @@
 import "../App.css";
 import React, { useState, useEffect } from "react";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../config";
+import Alert from "../components/alert";
+import Loader from "../components/loader";
 
 function Login() {
-  const [email, setEmail] = useState("zlkamaly@gmail.com");
-  const [password, setPassword] = useState("123456789");
+  const [userLogin, setUserLogin] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.info("USER=>", user);
-      const uid = user.uid;
-      console.info("USER=>uid", uid);
-      // ...
-    } else {
-      // ...
-    }
-  });
 
-  const correoClave = (e) => {
-    signInWithEmailAndPassword(auth, email, password)
+  const correoClave = () => {
+    console.log(true);
+    console.log("userLogin", userLogin);
+    console.log("userLogin email", userLogin.email);
+    console.log("userLogin password", userLogin.password);
+    setLoading(true);
+    // signInWithEmailAndPassword(auth, "zlkamaly@gmail.com", "123456789")
+    signInWithEmailAndPassword(auth, userLogin.email, userLogin.password)
       .then((userCredential) => {
         console.info(true);
-        console.log("=>>>>>>>>>>>>> userCredential", userCredential);
-        // Signed in
         const user = userCredential.user;
         console.log("=>>>>>>>>>>>>> user", user);
-        // ...
+        setLoading(false);
+        // window.location.reload();
       })
       .catch((error) => {
+        setLoading(false);
+        setMessage("Correo o clave invalida");
+        setError(true);
+        setUserLogin({ email: "", password: "" });
         const errorCode = error.code;
-        const errorMessage = error.message;
       });
   };
+
+  const handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+
+    setUserLogin({
+      ...userLogin,
+      [name]: event.target.value,
+    });
+
+    if (userLogin.email || userLogin.password) {
+      setDisabled(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="App">
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="container">
       <br></br>
-      <h1>Inicio</h1>
-      <form class="row justify-content-md-center">
-        <div class="col-3">
+      <h1>Iniciar sesión</h1>
+      <br></br>
+      <form class="row justify-content-md-center" onSubmit={correoClave}>
+        <div class="col-lg-4 col-12">
           <label for="staticEmail2" class="visually-hidden">
             Email
           </label>
@@ -54,9 +80,11 @@ function Login() {
             class="form-control"
             id="staticEmail2"
             placeholder="correo electronico"
-            // value={email}
+            required
+            onChange={handleChange}
+            value={userLogin.email}
           />
-
+          <br></br>
           <label for="inputPassword2" class="visually-hidden">
             Password
           </label>
@@ -66,16 +94,23 @@ function Login() {
             class="form-control"
             id="inputPassword2"
             placeholder="Clave"
-            // value={password}
+            required
+            onChange={handleChange}
+            value={userLogin.password}
           />
 
-          <button
+          <br></br>
+          <br></br>
+          <input type="submit" value="Submit" />
+          {/* <button
             type="button"
             class="btn btn-primary mb-3"
             onClick={correoClave}
+            disabled={disabled}
           >
             Aceptar
-          </button>
+          </button> */}
+          {error ? <Alert message={message} /> : <div />}
         </div>
       </form>
     </div>
