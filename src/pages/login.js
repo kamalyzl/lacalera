@@ -61,7 +61,10 @@ function Login() {
   return (
     <div className="container">
       <br></br>
-      <h1>Iniciar sesión</h1>
+      <h1 class="fw-bold">La Calera</h1>
+      <br></br>
+      <br></br>
+      <h5>Iniciar sesión</h5>
       <br></br>
       <form class="row justify-content-md-center" onSubmit={correoClave}>
         <div class="col-lg-4 col-12">

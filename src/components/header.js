@@ -13,7 +13,7 @@ function Header({ logout, nick }) {
             height="24"
             class="d-inline-block align-text-top"
           />
-          Pedidos
+          La Calera
         </a>
 
         <form class="d-flex">
