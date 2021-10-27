@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../config";
 import Alert from "../components/alert";
 import Loader from "../components/loader";
+import imgLaCalera from "../assets/lacalera.png";
 
 function Login() {
   const [userLogin, setUserLogin] = useState({ email: "", password: "" });
@@ -91,7 +92,6 @@ function Login() {
             onChange={handleChange}
             value={userLogin.password}
           />
-
           <br></br>
           <br></br>
           <input
@@ -103,6 +103,9 @@ function Login() {
           {error ? <Alert message={message} /> : <div />}
         </div>
       </form>
+      <figure>
+        <img src={imgLaCalera} class="img-fluid" alt="lacalera-image"/>
+      </figure>
     </div>
   );
 }

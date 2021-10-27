@@ -56,7 +56,7 @@ function App() {
 
   return (
     <div className="App">
-      {user ? <Header logout={logout} /> : <div></div>}
+      {user ? <Header logout={logout} nick={user.email}/> : <div></div>}
       {user ? <Home /> : <Login />}
     </div>
   );
