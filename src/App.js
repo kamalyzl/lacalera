@@ -8,16 +8,14 @@ import Login from "./pages/login";
 
 const auth = getAuth();
 function App() {
-  const [user, setUser] = useState(null);
+  const [userSession, setUserSession] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.info("user=>", user);
-        setUser(user);
-        const uid = user.uid;
+        setUserSession(user);
         setLoading(false);
       } else {
         console.error("ERROR: No hay usuario registrado");
@@ -56,8 +54,8 @@ function App() {
 
   return (
     <div className="App">
-      {user ? <Header logout={logout} nick={user.email}/> : <div></div>}
-      {user ? <Home /> : <Login />}
+      {userSession ? <Header logout={logout} nick={userSession.email}/> : <div></div>}
+      {userSession ? <Home data={userSession}/> : <Login />}
     </div>
   );
 }

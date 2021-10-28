@@ -9,7 +9,7 @@ function Header({ logout, nick }) {
           <img
             src={imgLaCalera}
             alt=""
-            width="30"
+            width="20"
             height="24"
             class="d-inline-block align-text-top"
           />
@@ -17,7 +17,7 @@ function Header({ logout, nick }) {
         </a>
 
         <form class="d-flex">
-          <span class="navbar-text m-2">{nick}</span>
+          <span class="navbar-text m-1">{nick}</span>
           <button
             class="btn btn-outline-success"
             type="button"

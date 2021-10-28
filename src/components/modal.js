@@ -1,7 +1,7 @@
 import "../App.css";
 import { Button, Modal, Table } from "react-bootstrap";
 
-function ModalDetail({ handleClose, show, data }) {
+function ModalDetail({ handleClose, show, client, delivery }) {
   return (
     <>
       <Modal show={show} onHide={handleClose} size="lg">
@@ -11,7 +11,7 @@ function ModalDetail({ handleClose, show, data }) {
           <br></br>
           <div class="mb-3 row">
             <label for="staticEmail" class="col-6 col-form-label">
-              Nº de pedido
+              Código de pedido
             </label>
             <div class="col-6">
               <input
@@ -19,7 +19,7 @@ function ModalDetail({ handleClose, show, data }) {
                 readonly
                 class="form-control-plaintext"
                 id="staticEmail"
-                value={data.id}
+                value={delivery.id}
               />
             </div>
           </div>
@@ -33,7 +33,7 @@ function ModalDetail({ handleClose, show, data }) {
                 readonly
                 class="form-control-plaintext"
                 id="staticEmail"
-                value={data.status}
+                value={delivery.status}
               />
             </div>
           </div>
@@ -47,7 +47,7 @@ function ModalDetail({ handleClose, show, data }) {
                 readonly
                 class="form-control-plaintext"
                 id="staticEmail"
-                value={data.date}
+                value={delivery.create_date}
               />
             </div>
           </div>
@@ -63,15 +63,15 @@ function ModalDetail({ handleClose, show, data }) {
             <tbody>
               <tr>
                 <th scope="row">Nombre</th>
-                <td>{data.cliente.name}</td>
+                <td>{client.name}</td>
               </tr>
               <tr>
                 <th scope="row">Nº de Contacto</th>
-                <td>{data.cliente.phone}</td>
+                <td>{client.phone}</td>
               </tr>
               <tr>
                 <th scope="row">Dirección</th>
-                <td>{data.cliente.address}</td>
+                <td>{client.address}</td>
               </tr>
             </tbody>
           </table>
@@ -82,17 +82,15 @@ function ModalDetail({ handleClose, show, data }) {
             <thead>
               <tr>
                 <th>Grupo</th>
-                <th>Código</th>
                 <th>Descripción</th>
                 <th>Cantidad</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{data.group}</td>
-                <td>{data.code}</td>
-                <td>{data.sub_group}</td>
-                <td>{data.amount}</td>
+                <td>{delivery.group}</td>
+                <td>{delivery.sub_group}</td>
+                <td>{delivery.amount}</td>
               </tr>
             </tbody>
           </Table>
@@ -104,9 +102,9 @@ function ModalDetail({ handleClose, show, data }) {
           <Button variant="primary" onClick={handleClose}>
             Modificar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          {/* <Button variant="primary" onClick={handleClose}>
             Entrega
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
