@@ -19,7 +19,7 @@ function ModalDetail({ handleClose, show, client, delivery }) {
                 readonly
                 class="form-control-plaintext"
                 id="staticEmail"
-                value={delivery.id}
+                value={delivery.codigo || '-'}
               />
             </div>
           </div>
@@ -33,7 +33,7 @@ function ModalDetail({ handleClose, show, client, delivery }) {
                 readonly
                 class="form-control-plaintext"
                 id="staticEmail"
-                value={delivery.status}
+                value={delivery.estado || '-'}
               />
             </div>
           </div>
@@ -47,7 +47,9 @@ function ModalDetail({ handleClose, show, client, delivery }) {
                 readonly
                 class="form-control-plaintext"
                 id="staticEmail"
-                value={delivery.create_date}
+                value={delivery.createdAt
+                  ? new Date(delivery.createdAt).toLocaleString()
+                  : "-"}
               />
             </div>
           </div>
@@ -63,15 +65,15 @@ function ModalDetail({ handleClose, show, client, delivery }) {
             <tbody>
               <tr>
                 <th scope="row">Nombre</th>
-                <td>{client.name}</td>
+                <td>{delivery.nombreApellido}</td>
               </tr>
               <tr>
                 <th scope="row">Nº de Contacto</th>
-                <td>{client.phone}</td>
+                <td>{delivery.celular || '-'}</td>
               </tr>
               <tr>
                 <th scope="row">Dirección</th>
-                <td>{client.address}</td>
+                <td>{delivery.direccion}</td>
               </tr>
             </tbody>
           </table>
@@ -88,9 +90,9 @@ function ModalDetail({ handleClose, show, client, delivery }) {
             </thead>
             <tbody>
               <tr>
-                <td>{delivery.group}</td>
-                <td>{delivery.sub_group}</td>
-                <td>{delivery.amount}</td>
+                <td>{delivery.producto}</td>
+                <td>{delivery.producto}</td>
+                <td>{delivery.cantidad}</td>
               </tr>
             </tbody>
           </Table>

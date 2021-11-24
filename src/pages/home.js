@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import Modal from "../components/modal";
 import Loader from "../components/loader";
 import { dbRef } from "../config";
+import axios from "axios";
 
 const getDelivery = (id) => {
   return new Promise((resolve, reject) => {
@@ -23,6 +24,24 @@ const getDelivery = (id) => {
   });
 };
 
+const getdbibm = () => {
+  return axios
+    .get("https://971a161f.us-south.apigw.appdomain.cloud/api/entries", {
+      // params: {
+      //   ID: 12345
+      // }
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+};
+
 function Home({ data }) {
   const [show, setShow] = useState(false);
 
@@ -34,24 +53,44 @@ function Home({ data }) {
   const [delivery, setDelivery] = useState(null);
 
   useEffect(() => {
-    get(child(dbRef, `users/${data.uid}`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          const dbdeliveries = snapshot.val().deliveries;
-          setUser(snapshot.val());
-          return dbdeliveries;
-        } else {
-          console.log("No data available");
-        }
+    axios
+      .get("https://971a161f.us-south.apigw.appdomain.cloud/api/entries", {
+        // params: {
+        //   ID: 12345
+        // }
       })
-      .then((deliveryCodes) => {
-        Promise.all(
-          deliveryCodes.map((item) => getDelivery(item))
-        ).then((result) => setDeliveries(result));
+      .then(function (response) {
+        const res = response.data.entries.filter(
+          (item) => item.correo === data.email
+        );
+
+        setDeliveries(res);
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
       });
+
+    // get(child(dbRef, `users/${data.uid}`))
+    //   .then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //       const dbdeliveries = snapshot.val().deliveries;
+    //       setUser(snapshot.val());
+    //       return dbdeliveries;
+    //     } else {
+    //       console.log("No data available");
+    //     }
+    //   })
+    //   .then((deliveryCodes) => {
+    //     Promise.all(
+    //       deliveryCodes.map((item) => getDelivery(item))
+    //     ).then((result) => setDeliveries(result));
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   }, []);
 
   return (
@@ -62,7 +101,6 @@ function Home({ data }) {
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Código</th>
             <th scope="col">Estado</th>
             <th scope="col">Fecha</th>
@@ -72,12 +110,16 @@ function Home({ data }) {
         <tbody>
           {deliveries &&
             deliveries.map((delivery) => {
+              console.info("delivery->>>>", delivery);
               return (
                 <tr>
-                  <th scope="row">{delivery.order}</th>
-                  <td>{delivery.id}</td>
-                  <td>{delivery.status}</td>
-                  <td>{delivery.create_date}</td>
+                  <td>{delivery.codigo || "-"}</td>
+                  <td>{delivery.estado || "-"}</td>
+                  <td>
+                    {delivery.createdAt
+                      ? new Date(delivery.createdAt).toLocaleString()
+                      : "-"}
+                  </td>
                   <td>
                     <Button
                       variant="primary"

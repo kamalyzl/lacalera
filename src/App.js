@@ -16,6 +16,7 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserSession(user);
+        localStorage.setItem("user", user);
         setLoading(false);
       } else {
         console.error("ERROR: No hay usuario registrado");
